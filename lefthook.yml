@@ -65,10 +65,10 @@ pre-commit:
   parallel: true
   commands:
     bats-unit:
-      run: timeout ${LEFTHOOK_BATS_UNIT_TIMEOUT:-120} bats --jobs "$(nproc 2>/dev/null || sysctl -n hw.ncpu)" tests/unit/
+      run: timeout ${LEFTHOOK_BATS_UNIT_TIMEOUT:-120} bats --jobs "$(nproc)" tests/unit/
 
 pre-push:
   parallel: true
   commands:
     bats-unit:
-      run: timeout ${LEFTHOOK_BATS_UNIT_TIMEOUT:-120} bats --jobs "$(nproc 2>/dev/null || sysctl -n hw.ncpu)" tests/unit/
+      run: timeout ${LEFTHOOK_BATS_UNIT_TIMEOUT:-120} bats --jobs "$(nproc)" tests/unit/
