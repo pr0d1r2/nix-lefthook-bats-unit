@@ -15,6 +15,10 @@
       url = "github:pr0d1r2/nix-lefthook-missing-final-newline";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-lefthook-nix-no-embedded-shell = {
+      url = "github:pr0d1r2/nix-lefthook-nix-no-embedded-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-lefthook-trailing-whitespace = {
       url = "github:pr0d1r2/nix-lefthook-trailing-whitespace";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -28,6 +32,7 @@
       nix-lefthook-git-conflict-markers,
       nix-lefthook-git-no-local-paths,
       nix-lefthook-missing-final-newline,
+      nix-lefthook-nix-no-embedded-shell,
       nix-lefthook-trailing-whitespace,
     }:
     let
@@ -68,6 +73,7 @@
               nix-lefthook-git-conflict-markers.packages.${pkgs.stdenv.hostPlatform.system}.default
               nix-lefthook-git-no-local-paths.packages.${pkgs.stdenv.hostPlatform.system}.default
               nix-lefthook-missing-final-newline.packages.${pkgs.stdenv.hostPlatform.system}.default
+              nix-lefthook-nix-no-embedded-shell.packages.${pkgs.stdenv.hostPlatform.system}.default
               nix-lefthook-trailing-whitespace.packages.${pkgs.stdenv.hostPlatform.system}.default
               batsWithLibs
               pkgs.coreutils
