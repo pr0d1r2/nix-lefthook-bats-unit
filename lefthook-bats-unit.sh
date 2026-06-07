@@ -1,11 +1,16 @@
 # shellcheck shell=bash
 # Run bats unit tests in parallel.
-# Usage: lefthook-bats-unit [file1.bats file2.bats ...]
-# With arguments: runs only the given .bats files.
+# Usage: lefthook-bats-unit [dir_or_files...]
+# With a directory argument: runs all *.bats in that directory.
+# With file arguments: runs only the given .bats files.
 # Without arguments: runs all *.bats in tests/unit/.
 # NOTE: sourced by writeShellApplication — no shebang or set needed.
 
-if [ $# -gt 0 ]; then
+if [ $# -eq 0 ]; then
+  test_dir="tests/unit"
+elif [ $# -eq 1 ] && [ -d "$1" ]; then
+  test_dir="$1"
+else
   files=()
   for f in "$@"; do
     [ -f "$f" ] || continue
@@ -18,8 +23,6 @@ if [ $# -gt 0 ]; then
   fi
   exec bats --jobs "$(nproc)" "${files[@]}"
 fi
-
-test_dir="tests/unit"
 
 if [ ! -d "$test_dir" ]; then
   exit 0
