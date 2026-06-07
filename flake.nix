@@ -206,6 +206,7 @@
           runtimeInputs = [
             pkgs.bats
             pkgs.coreutils
+            pkgs.parallel
           ];
           text = builtins.readFile ./lefthook-bats-unit.sh;
         };
