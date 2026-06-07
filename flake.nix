@@ -130,11 +130,26 @@
           (wrap "lefthook-editorconfig-checker" nix-lefthook-editorconfig-checker-src {
             runtimeInputs = [ pkgs.editorconfig-checker ];
           })
-          (wrap "lefthook-file-size-check" nix-lefthook-file-size-check-src {
+          (wrap "get-file-size-limit" nix-lefthook-file-size-check-src {
             runtimeInputs = [
               pkgs.gawk
               pkgs.gnugrep
             ];
+          })
+          (pkgs.writeShellApplication {
+            name = "lefthook-file-size-check";
+            runtimeInputs = [
+              pkgs.gawk
+              pkgs.gnugrep
+              pkgs.coreutils
+              (wrap "get-file-size-limit" nix-lefthook-file-size-check-src {
+                runtimeInputs = [
+                  pkgs.gawk
+                  pkgs.gnugrep
+                ];
+              })
+            ];
+            text = builtins.readFile "${nix-lefthook-file-size-check-src}/lefthook-file-size-check.sh";
           })
           (wrap "lefthook-git-conflict-markers" nix-lefthook-git-conflict-markers-src {
             runtimeInputs = [ pkgs.gnugrep ];
