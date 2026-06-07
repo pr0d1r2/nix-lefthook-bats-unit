@@ -7,7 +7,7 @@
 test_dir="${1:-tests/unit}"
 
 if [ ! -d "$test_dir" ]; then
-    exit 0
+  exit 0
 fi
 
 shopt -s nullglob
@@ -15,7 +15,7 @@ tests=("$test_dir"/*.bats)
 shopt -u nullglob
 
 if [ ${#tests[@]} -eq 0 ]; then
-    exit 0
+  exit 0
 fi
 
 exec bats --jobs "$(nproc)" "$test_dir"
