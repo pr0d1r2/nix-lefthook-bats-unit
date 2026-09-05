@@ -6,7 +6,19 @@
 
 Lefthook-compatible [Bats](https://github.com/bats-core/bats-core) unit test runner, packaged as a Nix flake.
 
-Runs all `.bats` files in `tests/unit/` in parallel using `bats --jobs`. Exits 0 when the directory doesn't exist or contains no `.bats` files.
+Runs a repository's `.bats` specs, discovered with `git ls-files` so no layout is
+privileged: flat in `tests/`, under `tests/unit/`, or nested anywhere else.
+
+Sequential by default, because specs that share git and test state are flaky in
+parallel; set `LEFTHOOK_BATS_UNIT_JOBS` to opt back in.
+
+A repository with no tracked specs says so and exits 0. Outside a git repository
+it exits non-zero rather than reporting green on a suite it could not find --
+the previous default was the literal path `tests/unit/` and exited 0 when absent,
+so a repository keeping its specs elsewhere had a gate that ran nothing.
+
+With arguments the contract is unchanged: a directory runs the `.bats` files
+directly inside it, and file arguments run exactly those files.
 
 ## Usage
 
