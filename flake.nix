@@ -203,8 +203,15 @@
       packages = forAllSystems (pkgs: {
         default = pkgs.writeShellApplication {
           name = "lefthook-bats-unit";
+          # `bats.withLibraries`, not `pkgs.bats`: this wrapper's runtimeInputs
+          # shadow the caller's PATH, so in a consumer repository -- where this
+          # wrapper is the ONLY bats -- plain bats leaves BATS_LIB_PATH unset
+          # and every spec dies in `setup` on `Could not find
+          # '/usr/lib/bats/bats-support/load.bash'`. The rule is the fleet's
+          # own (set/skills/test/bats-with-libraries.md, "Upstream tools"),
+          # and this package was the exception to it.
           runtimeInputs = [
-            pkgs.bats
+            (batsWithLibsFor pkgs)
             pkgs.coreutils
             pkgs.parallel
           ];
